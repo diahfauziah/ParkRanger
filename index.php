@@ -44,54 +44,36 @@
 				</ul>
 			</div>
 			<br />
-	       	<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="col-xs-3">
-						<a href="#" class="thumbnail">
-							<img src="img/taman1.jpg" alt="taman">
-						</a>
-					</div>
-					<div class="col-xs-9">
-						<h2><a href="#"><strong>Taman Kedamaian</strong></a></h2>
-						<p class="text-warning">Jenis laporan : kerusakan</p>
-						<p>
-						Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Aenean lacinia bibendum nulla sed consectetur. Nulla vitae elit libero, a pharetra augue. Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in.</p>
-						<p id="status">
-							<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> Belum ditindaklanjuti</span><br />
-							<small>Pelapor : <a href="profile.html" class="text-primary">edmund.ophie </a> <a href="#"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a></small>
-						</p>
-						<div class="vote">
-							<a href="#"><span class="glyphicon glyphicon-triangle-top"></span></a>
-							19
-							<a href="#"><span class="glyphicon glyphicon-triangle-bottom"></span></a>
-						</div>
-					</div>
-	        	</div>
-      		</div><!-- End of Panel -->
-      		<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="col-xs-3">
-						<a href="#" class="thumbnail">
-							<img src="img/taman1.jpg" alt="taman">
-						</a>
-					</div>
-					<div class="col-xs-9">
-						<h2><a href="#" class="text-primary"><strong>Taman Kedamaian</strong></a></h2>
-						<p class="text-warning">Jenis laporan : kerusakan</p>
-						<p>
-						Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Aenean lacinia bibendum nulla sed consectetur. Nulla vitae elit libero, a pharetra augue. Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in.</p>
-						<p id="status">
-							<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Sudah ditindaklanjuti</span><br />
-							<small>Pelapor : <a href="profile.html" class="text-primary">joko.wi </a> <a href="#"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a></small>
-						</p>
-						<div class="vote">
-							<a href="#"><span class="glyphicon glyphicon-triangle-top"></span></a>
-							19
-							<a href="#"><span class="glyphicon glyphicon-triangle-bottom"></span></a>
-						</div>
-					</div>
-	        	</div>
-      		</div><!-- End of Panel -->
+			  <?php include ('koneksi.php'); 
+					$query = mysql_query("select * from pengaduan natural join taman order by waktu desc");
+					while ($data = mysql_fetch_array($query)){
+				       	echo '<div class="panel panel-default">';
+						echo	'<div class="panel-body">';
+						echo		'<div class="col-xs-3">';
+						echo			'<a href="#" class="thumbnail"><img src="img/taman1.jpg" alt="taman"></a>';
+						echo '</div>';
+						echo		'<div class="col-xs-9">';
+						echo			'<h2><a href="#"><strong><a href="#">'. $data["nama"] . '</a></strong></a></h2>';
+						echo			'<p class="text-warning">Jenis laporan : '.$data["jenis_laporan"].' </p>';
+						echo			'<p>'.$data["keterangan"].'</p>';
+						echo			'<p id="status">';
+						if($data["status"]==NULL){
+								echo	'<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> Belum ditindaklanjuti</span><br />';
+						}else{
+								echo	'<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Sudah ditindaklanjuti</span><br />';
+						}
+						echo				'<small>Pelapor : <a href="profile.html" class="text-primary">edmund.ophie </a> <a href="#"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a></small>';
+						echo			'</p>';
+						echo			'<div class="vote col-xs-3 text-right">';
+						echo				'<a id="upvote'.$data["id_laporan"].'" href="upvote.php?id_laporan='.$data["id_laporan"].'"><span class="glyphicon glyphicon-triangle-top" ></span></a>';
+						echo				'20';
+						echo				'<a id="downvote'.$data["id_laporan"].'" href="#"><span class="glyphicon glyphicon-triangle-bottom"></span></a>';
+						echo			'</div>';
+						echo		'</div>';
+				        echo	'</div>';
+			      		echo '</div>';
+			      	}
+      			?>
 			<nav class="text-center">
 				<ul class="pagination">
 					<li class="disabled">
@@ -123,6 +105,6 @@
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
-
+        <script type="text/javascript" src="vote.js"></script>
     </body>
 </html>

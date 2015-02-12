@@ -16,7 +16,9 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/lapor.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    
     </head>
+
     <body>
     	<div class="container">
 	        <div class="top">
@@ -32,26 +34,32 @@
 	       	</div>
 	       	<h2 class="text-primary subtitle col-xs-6">Kirim Laporan</h2>
 	       	<div class="clearfix"></div>
-	       	<form action="#" method="POST" class="form-horizontal col-xs-6 col-xs-offsets-3">
+	       	<form action="memproses_laporan.php" method="POST" class="form-horizontal col-xs-6 col-xs-offsets-3">
 	       		<div class="form-group">
 		       		<label for="taman" class="col-xs-3 control-label">Taman</label>
 		       		<div class="col-xs-9">
-			       		<select class="form-control" id="taman">
-			       			<option>Pasupati</option>
-			       			<option>Siswa</option>
-			       			<option>Kedamaian</option>
-			       			<option>Jomblo</option>
+			       		<select class="form-control" name="taman">
+			       			<?php 
+			       				include "koneksi.php";
+			       				$ambil = "SELECT `nama` FROM `taman`";
+			       				$query1 = mysql_query($ambil);
+			       				$value = 1;
+			       				while ($post = mysql_fetch_array($query1)){
+			       					echo '<option value='.$value.'>'.$post["nama"].'</option>';
+			       					$value = $value + 1;
+			       				}
+			       			?>
 			       		</select>
 		       		</div>
 		       	</div>
 		       	<div class="form-group">
 		       		<label for="jenis" class="col-xs-3 control-label">Jenis laporan</label>
 		       		<div class="col-xs-9">
-			       		<select class="form-control" id="jenis">
-			       			<option>Kerusakan</option>
-			       			<option>Ketertiban</option>
-			       			<option>Kebersihan</option>
-			       			<option>Keamanan</option>
+			       		<select class="form-control" name="jenis">
+			       			<option value="Kerusakan">Kerusakan</option>
+			       			<option value="Ketertiban">Ketertiban</option>
+			       			<option value="Kebersihan">Kebersihan</option>
+			       			<option value="Keamanan">Keamanan</option>
 			       		</select>
 			       	</div>
 	       		</div>
@@ -64,7 +72,7 @@
 	       		<div class="form-group">
 	       			<label for="deskripsi" class="col-xs-3 control-label">Deskripsi</label>
 		       		<div class="col-xs-9">
-		       			<textarea class="form-control" rows="4"></textarea>
+		       			<textarea class="form-control" rows="4" name="keterangan"></textarea>
 	       			</div>
 	       		</div>
 	       		<input type="submit" value="Laporkan!" class="btn btn-primary btn-block">
@@ -82,6 +90,6 @@
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
-
+        <script type="text/javascript" scr="vote.js"></script>
     </body>
 </html>
