@@ -21,7 +21,12 @@
     	<div class="container">
 	        <div class="top">
 		        <h1 class="text-muted"><a href="index.php">Park Ranger</a></h1>
-			    <p class="text-right">Logged in as <a href="#">Edmund</a></p>
+				<?php include ('koneksi.php'); 
+					$online = mysql_query("select * from user where role = 1");
+					while($tabel_user = mysql_fetch_array($online)){
+					    echo '<p class="text-right">Logged in as <a href="#">'.$tabel_user["nama"].'</a></p>';
+					}
+			    ?>
 			    <div class="clearfix"></div>
 		        <ul class="nav nav-justified" role="navigation">
 		        	<li class="active"><a href="index.php">Home</a></li>
@@ -53,22 +58,39 @@
 						echo			'<a href="#" class="thumbnail"><img src="img/taman1.jpg" alt="taman"></a>';
 						echo '</div>';
 						echo		'<div class="col-xs-9">';
-						echo			'<h2><a href="#"><strong><a href="#">'. $data["nama"] . '</a></strong></a></h2>';
+						echo			'<h2><strong>'. $data["nama"] . '</strong></h2>';
 						echo			'<p class="text-warning">Jenis laporan : '.$data["jenis_laporan"].' </p>';
 						echo			'<p>'.$data["keterangan"].'</p>';
 						echo			'<p id="status">';
-						if($data["status"]==NULL){
+							if($data["status"]==NULL){
 								echo	'<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> Belum ditindaklanjuti</span><br />';
-						}else{
+							}else{
 								echo	'<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Sudah ditindaklanjuti</span><br />';
-						}
-						echo				'<small>Pelapor : <a href="profile.html" class="text-primary">edmund.ophie </a> <a href="#"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a></small>';
+							}
+								echo	'<small>Pelapor : <a href="profile.html" class="text-primary">edmund.ophie </a> <a href="#" data-toggle="modal" data-target="#myModal"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a></small>';					
 						echo			'</p>';
 						echo			'<div class="vote col-xs-3 text-right">';
 						echo				'<a id="upvote'.$data["id_laporan"].'" href="upvote.php?id_laporan='.$data["id_laporan"].'"><span class="glyphicon glyphicon-triangle-top" ></span></a>';
-						echo				'20';
+						echo				$data["rank_vote"];
 						echo				'<a id="downvote'.$data["id_laporan"].'" href="#"><span class="glyphicon glyphicon-triangle-bottom"></span></a>';
 						echo			'</div>';
+						echo	'<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+											<div class="modal-dialog"> 
+												<div class="modal-content"> 
+													<div class="modal-header"> 
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">× </button> 
+														<h4 class="modal-title" id="myModalLabel"> Blokir User  </h4> 
+													</div> 
+													<div class="modal-body">
+														Apakah Anda yakin ingin memblokir user ini? 
+													</div> 
+													<div class="modal-footer"> 
+														<button type="button" class="btn btn-default" data-dismiss="modal"> Tidak </button> 
+														<button type="button" class="btn btn-primary"> Ya </button> 
+													</div> 
+												</div>
+											</div>
+										</div>';
 						echo		'</div>';
 				        echo	'</div>';
 			      		echo '</div>';
